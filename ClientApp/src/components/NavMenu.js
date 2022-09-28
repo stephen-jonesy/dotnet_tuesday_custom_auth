@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
+import Cookies from 'js-cookie';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -19,6 +20,10 @@ export class NavMenu extends Component {
     this.setState({
       collapsed: !this.state.collapsed
     });
+  }
+
+  logOutFunt () {
+    Cookies.remove('token');
   }
 
   render () {
@@ -40,8 +45,15 @@ export class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
                 </NavItem>
                 <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/register">Register</NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/profile">Profile</NavLink>
+                </NavItem>
+                <button onClick={this.logOutFunt}>Logout</button>
               </ul>
             </Collapse>
           </Container>

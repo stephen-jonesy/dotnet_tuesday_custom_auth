@@ -1,51 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import { authenticateUser } from './userReducer';
+import { useSelector, useDispatch } from 'react-redux';
 
 export function Login() {
 
-    async function registerFunct() {
+    const selectUser = (state) => state.user.user;
+  
+    const dispatch = useDispatch();
+    const user = useSelector(selectUser);
+    console.log(user);
+    // async function registerFunct() {
 
-        const user = {
-            "firstName": "Stephen",
-            "lastName": "Jones",
-            "username": "Jonesy",
-            "password": "Jonesy12@"
-        };
-        const config = {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user)
-        }
-        const data = await fetch('users/register', config);
-        const json = await data.json()
-        console.log(json);
-    }
+    //     const user = {
+    //         "firstName": "Stephen",
+    //         "lastName": "Jones",
+    //         "username": "Jonesy",
+    //         "password": "Jonesy12@"
+    //     };
+    //     const config = {
+    //         method: 'POST',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(user)
+    //     }
+    //     const data = await fetch('users/register', config);
+    //     const json = await data.json()
+    //     console.log(json);
+    // }
 
     async function loginFunt() {
+        dispatch(authenticateUser());
 
-        const user = {
-            "username": "Jonesy",
-            "password": "Jonesy12@"
-        };
-        const config = {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user)
-        }
-        const data = await fetch('users/authenticate', config);
-        const json = await data.json();
-        Cookies.set("token", json.token) 
+        // const user = {
+        //     "username": "Jonesy",
+        //     "password": "Jonesy12@"
+        // };
+        // const config = {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(user)
+        // }
+        // const data = await fetch('users/authenticate', config);
+        // const json = await data.json();
+        // Cookies.set("token", json.token); 
 
-        console.log(json);
+        // console.log(json);
     }
 
-    async function getUsers() {
+    async function getUsersFunt() {
         const token = Cookies.get("token");
         const response = await fetch(`users/`, {
             headers: !token ? {} : { 
@@ -74,10 +82,10 @@ export function Login() {
         console.log(json);
     }
 
-    async function logOutFunt() {
-        Cookies.remove('token');
+    // async function logOutFunt() {
+    //     Cookies.remove('token');
 
-    }
+    // }
 
     // useEffect(() => {
     //     loginFunt();
@@ -86,10 +94,10 @@ export function Login() {
 
     return (  
         <div>
-            <button onClick={registerFunct}>register user</button>
+            {/* <button onClick={registerFunct}>register user</button> */}
             <button onClick={loginFunt}>Login user</button>
-            <button onClick={logOutFunt}>Logout user</button>
-            <button onClick={getUsers}>get all users</button>
+            {/* <button onClick={logOutFunt}>Logout user</button> */}
+            <button onClick={getUsersFunt}>get all users</button>
             <button onClick={DeleteFunt}>Delete user</button>
 
             login page
