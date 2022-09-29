@@ -4,12 +4,12 @@ import { authenticateUser } from './userReducer';
 import { useSelector, useDispatch } from 'react-redux';
 
 export function Login() {
-
-    const selectUser = (state) => state.user.user;
   
     const dispatch = useDispatch();
+    const selectUser = (state) => state.user.user;
     const user = useSelector(selectUser);
     console.log(user);
+
     // async function registerFunct() {
 
     //     const user = {
@@ -56,9 +56,9 @@ export function Login() {
     async function getUsersFunt() {
         const token = Cookies.get("token");
         const response = await fetch(`users/`, {
-            headers: !token ? {} : { 
-                'Authorization': `Bearer ${token}`
-            }
+                headers: !token ? {} : { 
+                    'Authorization': `Bearer ${token}`
+                }
             });
         const json = await response.json()
         console.log(json);
@@ -82,10 +82,6 @@ export function Login() {
         console.log(json);
     }
 
-    // async function logOutFunt() {
-    //     Cookies.remove('token');
-
-    // }
 
     // useEffect(() => {
     //     loginFunt();
@@ -96,7 +92,6 @@ export function Login() {
         <div>
             {/* <button onClick={registerFunct}>register user</button> */}
             <button onClick={loginFunt}>Login user</button>
-            {/* <button onClick={logOutFunt}>Logout user</button> */}
             <button onClick={getUsersFunt}>get all users</button>
             <button onClick={DeleteFunt}>Delete user</button>
 

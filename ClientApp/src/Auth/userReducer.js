@@ -32,7 +32,6 @@ export const authenticateUser = createAsyncThunk(
 
         return json;
 
-
     }
 )
 
@@ -73,12 +72,17 @@ export const userSlice = createSlice({
         //     const filterProjects = state.projects.filter((project) => project.id !== action.payload);
         //     state.projects = filterProjects;
         // },
+        getUser: (state, action) => {
+            state.user = action.payload;
+
+        },
 
         logoutUser: (state, action) => {
-            const filterProjects = state.projects.map((project) =>
-                project.id === action.payload ? {...project, isComplete: !project.isComplete} : project);
-            state.projects = filterProjects;
-            
+            console.log('logout rucer')
+            Cookies.remove('token');
+            localStorage.removeItem("user");
+            state.user = null;
+
         },
 
     },
@@ -93,14 +97,23 @@ export const userSlice = createSlice({
         })
         builder.addCase(authenticateUser.fulfilled, (state, action) => {
             // Add user to the state array
+            console.log(action.payload);
+            const user = {
+                id: action.payload.id,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+                username: action.payload.username
+
+            };
+
             state.loading = false;
-            state.user = action.payload
+            state.user = user;
+            localStorage.setItem("user", JSON.stringify(user));
 
         })
         builder.addCase(authenticateUser.rejected, (state, action) => {
             state.loading = false;
             state.error = true;
-
             state.message = "Opps, something went wrong"
 
         })
@@ -125,7 +138,7 @@ export const userSlice = createSlice({
     
 });
 
-export const { logoutUser } = userSlice.actions;
+export const { getUser, logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;
 

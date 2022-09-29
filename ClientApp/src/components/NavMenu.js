@@ -3,62 +3,63 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 import Cookies from 'js-cookie';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '../Auth/userReducer';
 
-export class NavMenu extends Component {
-  static displayName = NavMenu.name;
+export function NavMenu () {
+  const dispatch = useDispatch();
 
-  constructor (props) {
-    super(props);
+  // static displayName = NavMenu.name;
 
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true
-    };
+  // constructor (props) {
+  //   super(props);
+
+  //   this.toggleNavbar = this.toggleNavbar.bind(this);
+  //   this.state = {
+  //     collapsed: true
+  //   };
+  // }
+
+  // toggleNavbar () {
+  //   this.setState({
+  //     collapsed: !this.state.collapsed
+  //   });
+  // }
+
+  const logOutFunt = () => {
+    console.log("logout funct")
+    dispatch(logoutUser());
   }
 
-  toggleNavbar () {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
+  return (
+    <header>
+      <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+        <Container>
+          <NavbarBrand tag={Link} to="/">DotnetTuesday</NavbarBrand>
+            <ul className="navbar-nav flex-grow">
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/register">Register</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/profile">Profile</NavLink>
+              </NavItem>
+              <button onClick={() => logOutFunt()}>Logout</button>
+            </ul>
+        </Container>
+      </Navbar>
+    </header>
+  );
 
-  logOutFunt () {
-    Cookies.remove('token');
-  }
-
-  render () {
-    return (
-      <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
-          <Container>
-            <NavbarBrand tag={Link} to="/">DotnetTuesday</NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-              <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/register">Register</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/profile">Profile</NavLink>
-                </NavItem>
-                <button onClick={this.logOutFunt}>Logout</button>
-              </ul>
-            </Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    );
-  }
 }
