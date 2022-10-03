@@ -1,6 +1,6 @@
 import React, { Component, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route } from 'react-router';
+import { Route, Redirect } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { Login } from './Auth/Login';
@@ -14,23 +14,80 @@ import './custom.css'
 
 export function App() {
   const dispatch = useDispatch();
-
+  const selectAuthState = (state) => state.user.auth;
+  const Auth = useSelector(selectAuthState);
+  console.log(Auth);
   useEffect(() => {
     let storedUser = localStorage.getItem("user");
     storedUser = JSON.parse(storedUser);
-    dispatch(getUser(storedUser));
+    console.log(storedUser);
+    if(storedUser != null) {
+      dispatch(getUser(storedUser));
+
+    }
   }, []);
 
   return (
     <Layout>
-      <Route exact path='/' component={Home} />
+      <RedirectAuthRoute path="/" isAuth={Auth}>
+        <Home />
+      </RedirectAuthRoute>
       <Route path='/counter' component={Counter} />
-      <Route path='/fetch-data' component={FetchData} />
-      <Route path='/login' component={Login} />
-      <Route path='/register' component={Register} />
+      <PrivateRoute path="/fetch-data" isAuth={Auth}>
+        <FetchData />
+      </PrivateRoute>
+      {/* <Route path='/fetch-data' component={FetchData} /> */}
+      <RedirectAuthRoute path="/login" isAuth={Auth}>
+        <Login />
+      </RedirectAuthRoute>
+      <RedirectAuthRoute path="/register" isAuth={Auth}>
+        <Register />
+      </RedirectAuthRoute>
       <Route path='/profile' component={Profile} />
 
     </Layout>
   );
   
 }
+
+function PrivateRoute({ children, ...rest }) {
+  let auth = rest.isAuth;
+  console.log(rest);
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        auth ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+            }}
+          />
+        )
+      }
+    />
+  );
+};
+
+function RedirectAuthRoute({ children, ...rest }) {
+  let auth = rest.isAuth;
+  console.log(rest);
+  return (
+    <Route exact
+      {...rest}
+      render={({ location }) =>
+        !auth ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/fetch-data",
+            }}
+          />
+        )
+      }
+    />
+  );
+};

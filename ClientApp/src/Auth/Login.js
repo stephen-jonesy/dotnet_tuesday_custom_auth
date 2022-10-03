@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { authenticateUser } from './userReducer';
 import { useSelector, useDispatch } from 'react-redux';
+import {
+    BrowserRouter as Router,
+    useHistory,
 
+  } from "react-router-dom";
 export function Login() {
-  
+    const history = useHistory()
+
     const dispatch = useDispatch();
     const selectUser = (state) => state.user.user;
     const user = useSelector(selectUser);
@@ -62,6 +67,8 @@ export function Login() {
             });
         const json = await response.json()
         console.log(json);
+
+        history.push("/");
     }
 
 

@@ -5,7 +5,7 @@ const initialState = {
     message: null,
     loading: false,
     user: null,
-    auth: null,
+    auth: false,
     error: false
   
 }
@@ -74,6 +74,7 @@ export const userSlice = createSlice({
         // },
         getUser: (state, action) => {
             state.user = action.payload;
+            state.auth = true;
 
         },
 
@@ -82,6 +83,7 @@ export const userSlice = createSlice({
             Cookies.remove('token');
             localStorage.removeItem("user");
             state.user = null;
+            state.auth = false;
 
         },
 
@@ -109,12 +111,16 @@ export const userSlice = createSlice({
             state.loading = false;
             state.user = user;
             localStorage.setItem("user", JSON.stringify(user));
+            state.auth = true;
+
 
         })
         builder.addCase(authenticateUser.rejected, (state, action) => {
             state.loading = false;
             state.error = true;
-            state.message = "Opps, something went wrong"
+            state.message = "Opps, something went wrong";
+            state.auth = false;
+
 
         })
         builder.addCase(registerUser.pending, (state, action) => {

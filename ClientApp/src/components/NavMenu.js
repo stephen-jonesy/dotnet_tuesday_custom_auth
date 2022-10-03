@@ -9,6 +9,9 @@ import { logoutUser } from '../Auth/userReducer';
 export function NavMenu () {
   const dispatch = useDispatch();
 
+  const selectAuthState = (state) => state.user.auth;
+  const Auth = useSelector(selectAuthState);
+
   // static displayName = NavMenu.name;
 
   // constructor (props) {
@@ -46,17 +49,28 @@ export function NavMenu () {
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/register">Register</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/profile">Profile</NavLink>
-              </NavItem>
-              <button onClick={() => logOutFunt()}>Logout</button>
             </ul>
+              {Auth ? (
+              <ul className="navbar-nav flex-grow">
+
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/profile">Profile</NavLink>
+                </NavItem>
+                <button onClick={() => logOutFunt()}>Logout</button>
+
+              </ul>
+              ) : (
+              <ul className="navbar-nav flex-grow">
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/register">Register</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
+                </NavItem>
+
+              </ul>
+
+              )}
         </Container>
       </Navbar>
     </header>
