@@ -35,7 +35,7 @@ export function NavMenu () {
   }
 
   return (
-    <header>
+    <header className="header">
       <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
         <Container>
           <NavbarBrand tag={Link} to="/">DotnetTuesday</NavbarBrand>

@@ -5,8 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
     BrowserRouter as Router,
     useHistory,
+} from "react-router-dom";
+import tuesdayImage from '../images/Tuesday.svg';
 
-  } from "react-router-dom";
 export function Login() {
     const history = useHistory()
 
@@ -14,6 +15,9 @@ export function Login() {
     const selectUser = (state) => state.user.user;
     const user = useSelector(selectUser);
     console.log(user);
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     // async function registerFunct() {
 
@@ -95,6 +99,17 @@ export function Login() {
             
     // }, []);
 
+    // const addProjectButton = () => {
+    //     const projectObj = {
+    //         username: username,
+    //         password: password
+
+    //     };
+
+    //     dispatch(authenticateUser(projectObj));
+
+    // };  
+
     return (  
         <div>
             {/* <button onClick={registerFunct}>register user</button> */}
@@ -103,6 +118,32 @@ export function Login() {
             <button onClick={DeleteFunt}>Delete user</button>
 
             login page
+
+            <div className="card" style={{width: "18rem"}}>
+                <form className="p-4">
+                    <div className="w-100 d-flex justify-content-center">
+                        <img src={tuesdayImage} className="p-3 mb-2 mt-0"/>
+
+                    </div>
+
+                    <div className="form-group mb-3">
+                        <input type="username" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username"
+                        value={username}   
+                        onChange={(e) => {setUsername(e.target.value)}} 
+                        ></input>
+                    </div>
+                    <div className="form-group mb-3">
+                        <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
+                        value={password}   
+                        onChange={(e) => {setPassword(e.target.value)}} 
+                        ></input>
+                    </div>
+
+                    <button  type="submit" className="btn btn-primary w-100 mb-2" >Submit</button>
+                    <div className="d-flex justify-content-between"><a>Forgot your password?</a><a>Register</a></div>
+                    
+                </form>
+            </div>
         </div>
     );
 }

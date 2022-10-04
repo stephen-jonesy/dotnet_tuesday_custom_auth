@@ -100,6 +100,12 @@ export const userSlice = createSlice({
         builder.addCase(authenticateUser.fulfilled, (state, action) => {
             // Add user to the state array
             console.log(action.payload);
+            if ('message' in action.payload) {
+                state.user = null;
+                state.auth = false;
+
+
+            }
             const user = {
                 id: action.payload.id,
                 firstName: action.payload.firstName,
@@ -112,7 +118,7 @@ export const userSlice = createSlice({
             state.user = user;
             localStorage.setItem("user", JSON.stringify(user));
             state.auth = true;
-
+            console.log('is furfiled')
 
         })
         builder.addCase(authenticateUser.rejected, (state, action) => {
