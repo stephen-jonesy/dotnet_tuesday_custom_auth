@@ -12,12 +12,13 @@ const initialState = {
 
 export const authenticateUser = createAsyncThunk(
     'users/autheticate',
-    async () => {
+    async (userObj) => {
 
         const user = {
-            "username": "Jonesy",
-            "password": "Jonesy12@"
+            "username": userObj.username,
+            "password": userObj.password
         };
+
         const config = {
             method: 'POST',
             headers: {
@@ -28,7 +29,13 @@ export const authenticateUser = createAsyncThunk(
         }
         const data = await fetch('users/authenticate', config);
         const json = await data.json();
-        Cookies.set("token", json.token); 
+        console.log(json);
+        console.log(json.token);
+        if( json.token != null || undefined) {
+            console.log('token is valid');
+            Cookies.set("token", json.token); 
+
+        }
 
         return json;
 
@@ -37,14 +44,14 @@ export const authenticateUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
     'users/register',
-    async () => {
-
+    async (userObj,  thunkAPI ) => {
         const user = {
-            "firstName": "Stephen",
-            "lastName": "Jones",
-            "username": "Jonesy",
-            "password": "Jonesy12@"
+            "firstName": userObj.firstname,
+            "lastName": userObj.lastname,
+            "username": userObj.username,
+            "password": userObj.password
         };
+
         const config = {
             method: 'POST',
             headers: {
@@ -53,11 +60,29 @@ export const registerUser = createAsyncThunk(
             },
             body: JSON.stringify(user)
         }
-        const data = await fetch('users/register', config);
-        const json = await data.json()
-        console.log(json);
-        return json;
 
+        try {
+            console.log('thunk forfiled')
+
+            const data = await fetch('users/register', config);
+            const json = await data.json()
+            console.log(data.ok);
+            console.log(json);
+            if(data.ok == true) {
+                return json;
+
+            } else {
+                return thunkAPI.rejectWithValue(json);
+
+            }
+
+
+        } catch (err) {
+        // Use `err.response.data` as `action.payload` for a `rejected` action,
+        // by explicitly returning it using the `rejectWithValue()` utility
+            console.log('thunk rejected')
+            return thunkAPI.rejectWithValue(err.message)
+        }
 
     }
 )
@@ -90,38 +115,46 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
-
+        builder
         //authenticateUser
-        builder.addCase(authenticateUser.pending, (state, action) => {
+        .addCase(authenticateUser.pending, (state, action) => {
             // Add user to the state array
             state.loading = true;
 
         })
-        builder.addCase(authenticateUser.fulfilled, (state, action) => {
+        .addCase(authenticateUser.fulfilled, (state, action) => {
             // Add user to the state array
             console.log(action.payload);
-            if ('message' in action.payload) {
+            console.log("has error", !"errors" in action.payload);
+            
+            if ('message' in action.payload || "errors" in action.payload) {
+                console.log('error message')
                 state.user = null;
                 state.auth = false;
 
+            }
+            else {
+                const user = {
+                    id: action.payload.id,
+                    firstName: action.payload.firstName,
+                    lastName: action.payload.lastName,
+                    username: action.payload.username
+    
+                };
+    
+                state.loading = false;
+                state.user = user;
+                localStorage.setItem("user", JSON.stringify(user));
+                state.auth = true;
+                console.log('is furfiled');
 
             }
-            const user = {
-                id: action.payload.id,
-                firstName: action.payload.firstName,
-                lastName: action.payload.lastName,
-                username: action.payload.username
 
-            };
-
-            state.loading = false;
-            state.user = user;
-            localStorage.setItem("user", JSON.stringify(user));
-            state.auth = true;
-            console.log('is furfiled')
 
         })
-        builder.addCase(authenticateUser.rejected, (state, action) => {
+        .addCase(authenticateUser.rejected, (state, action) => {
+            console.log(action.payload);
+
             state.loading = false;
             state.error = true;
             state.message = "Opps, something went wrong";
@@ -129,18 +162,21 @@ export const userSlice = createSlice({
 
 
         })
-        builder.addCase(registerUser.pending, (state, action) => {
+        .addCase(registerUser.pending, (state, action) => {
             // Add user to the state array
             state.loading = true;
 
         })
-        builder.addCase(registerUser.fulfilled, (state, action) => {
+        .addCase(registerUser.fulfilled, (state, action) => {
             // Add user to the state array
+            console.log('fulfiled', action);
+
             state.loading = false;
             state.message = action.payload.message;
 
         })
-        builder.addCase(registerUser.rejected, (state, action) => {
+        .addCase(registerUser.rejected, (state, action) => {
+            console.log('rejected', action);
             state.loading = false;
             state.error = true;
             state.message = action.payload.message;

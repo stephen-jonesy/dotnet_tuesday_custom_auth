@@ -40,8 +40,15 @@ export function Login() {
     //     console.log(json);
     // }
 
-    async function loginFunt() {
-        dispatch(authenticateUser());
+    async function loginFunt(e) {
+        e.preventDefault();        
+
+        const userObj = {
+            username: username,
+            password: password,
+
+        };
+        dispatch(authenticateUser(userObj));
 
         // const user = {
         //     "username": "Jonesy",
@@ -113,14 +120,14 @@ export function Login() {
     return (  
         <div>
             {/* <button onClick={registerFunct}>register user</button> */}
-            <button onClick={loginFunt}>Login user</button>
+            {/* <button onClick={loginFunt}>Login user</button> */}
             <button onClick={getUsersFunt}>get all users</button>
             <button onClick={DeleteFunt}>Delete user</button>
 
             login page
 
             <div className="card" style={{width: "18rem"}}>
-                <form className="p-4">
+                <form className="p-4" onSubmit={loginFunt}>
                     <div className="w-100 d-flex justify-content-center">
                         <img src={tuesdayImage} className="p-3 mb-2 mt-0"/>
 

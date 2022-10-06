@@ -32,6 +32,7 @@ public class UsersController : ControllerBase
     public IActionResult Authenticate(AuthenticateRequest model)
     {
         var response = _userService.Authenticate(model);
+        Console.WriteLine("response", response);
         return Ok(response);
     }
 
