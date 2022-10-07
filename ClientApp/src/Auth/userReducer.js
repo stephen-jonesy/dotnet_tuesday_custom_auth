@@ -12,7 +12,7 @@ const initialState = {
 
 export const authenticateUser = createAsyncThunk(
     'users/autheticate',
-    async (userObj) => {
+    async (userObj, thunkAPI) => {
 
         const user = {
             "username": userObj.username,
@@ -27,18 +27,32 @@ export const authenticateUser = createAsyncThunk(
             },
             body: JSON.stringify(user)
         }
-        const data = await fetch('users/authenticate', config);
-        const json = await data.json();
-        console.log(json);
-        console.log(json.token);
-        if( json.token != null || undefined) {
-            console.log('token is valid');
-            Cookies.set("token", json.token); 
 
+        try {
+
+            const data = await fetch('users/authenticate', config);
+            const json = await data.json();
+            console.log(json);
+            if(data.ok == true) {
+                console.log('thunk forfiled')
+                console.log('token is valid');
+                Cookies.set("token", json.token); 
+                return json;
+
+            } else {
+                console.log('thunk rejected')
+
+                return thunkAPI.rejectWithValue(json);
+
+            }
+
+
+        } catch (err) {
+        // Use `err.response.data` as `action.payload` for a `rejected` action,
+        // by explicitly returning it using the `rejectWithValue()` utility
+            console.log('thunk rejected')
+            return thunkAPI.rejectWithValue(err.message)
         }
-
-        return json;
-
     }
 )
 
@@ -62,16 +76,19 @@ export const registerUser = createAsyncThunk(
         }
 
         try {
-            console.log('thunk forfiled')
 
             const data = await fetch('users/register', config);
             const json = await data.json()
             console.log(data.ok);
             console.log(json);
             if(data.ok == true) {
+                console.log('thunk forfiled')
+
                 return json;
 
             } else {
+                console.log('thunk rejected')
+
                 return thunkAPI.rejectWithValue(json);
 
             }

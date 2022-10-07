@@ -48,25 +48,10 @@ export function Login() {
             password: password,
 
         };
-        dispatch(authenticateUser(userObj));
-
-        // const user = {
-        //     "username": "Jonesy",
-        //     "password": "Jonesy12@"
-        // };
-        // const config = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(user)
-        // }
-        // const data = await fetch('users/authenticate', config);
-        // const json = await data.json();
-        // Cookies.set("token", json.token); 
-
-        // console.log(json);
+        dispatch(authenticateUser(userObj))
+        .then((response)=>{
+            console.log('from dispatch', response.meta.requestStatus);
+      })
     }
 
     async function getUsersFunt() {
@@ -119,12 +104,10 @@ export function Login() {
 
     return (  
         <div>
-            {/* <button onClick={registerFunct}>register user</button> */}
-            {/* <button onClick={loginFunt}>Login user</button> */}
+            {/* <button onClick={registerFunct}>register user</button> 
+            <button onClick={loginFunt}>Login user</button> 
             <button onClick={getUsersFunt}>get all users</button>
-            <button onClick={DeleteFunt}>Delete user</button>
-
-            login page
+            <button onClick={DeleteFunt}>Delete user</button> */}
 
             <div className="card" style={{width: "18rem"}}>
                 <form className="p-4" onSubmit={loginFunt}>
@@ -147,7 +130,7 @@ export function Login() {
                     </div>
 
                     <button  type="submit" className="btn btn-primary w-100 mb-2" >Submit</button>
-                    <div className="d-flex justify-content-between"><a>Forgot your password?</a><a>Register</a></div>
+                    <div className="d-flex justify-content-between"><p>Don't have a user yet? <a href="/register">Register</a></p></div>
                     
                 </form>
             </div>

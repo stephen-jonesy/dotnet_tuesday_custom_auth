@@ -27,14 +27,21 @@ export function Register () {
             password: password,
 
         };
-        dispatch(registerUser(userObj));
+        dispatch(registerUser(userObj))        
+        .then((response)=>{
+            console.log(response.meta.requestStatus);
+            console.log('from dispatch', response.meta.requestStatus);
+            if (response.meta.requestStatus != "rejected") {
+                history.push("/login");
+
+            }
+      })
         // history.push("/login");
 
     }
 
     return ( 
         <div>
-            Register
             {/* <button onClick={registerFunct}>register user</button> */}
 
             <div className="card" style={{width: "18rem"}}>
@@ -70,7 +77,7 @@ export function Register () {
                     </div>
 
                     <button  type="submit" className="btn btn-primary w-100 mb-2" >Submit</button>
-                    <div className="d-flex justify-content-between"><a>Forgot your password?</a><a>Register</a></div>
+                    <div className="d-flex justify-content-between"><p>Already have a user? <a href="/login">Login</a></p></div>
                     
                 </form>
             </div>

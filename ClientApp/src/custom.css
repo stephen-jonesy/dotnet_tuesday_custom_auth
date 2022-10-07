@@ -31,6 +31,10 @@ code {
   margin-top: 100px;
 }
 
+p {
+  font-size: 12px;
+}
+
 a {
   font-size: 12px;
 }
