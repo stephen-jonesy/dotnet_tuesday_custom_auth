@@ -123,7 +123,7 @@ export const userSlice = createSlice({
         logoutUser: (state, action) => {
             console.log('logout rucer')
             Cookies.remove('token');
-            localStorage.removeItem("user");
+            sessionStorage.removeItem("user");
             state.user = null;
             state.auth = false;
 
@@ -161,7 +161,7 @@ export const userSlice = createSlice({
     
                 state.loading = false;
                 state.user = user;
-                localStorage.setItem("user", JSON.stringify(user));
+                sessionStorage.setItem("user", JSON.stringify(user));
                 state.auth = true;
                 console.log('is furfiled');
 

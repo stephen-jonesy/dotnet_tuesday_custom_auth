@@ -1,4 +1,6 @@
 import React, { Component, useEffect } from 'react';
+import './App.scss';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Redirect } from 'react-router';
 import { Layout } from './components/Layout';
@@ -9,6 +11,7 @@ import { Profile } from './Auth/Profile';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import { getUser } from './Auth/userReducer';
+import { List } from './components/list/List';
 
 import './custom.css'
 
@@ -18,7 +21,7 @@ export function App() {
   const Auth = useSelector(selectAuthState);
   console.log(Auth);
   useEffect(() => {
-    let storedUser = localStorage.getItem("user");
+    let storedUser = sessionStorage.getItem("user");
     storedUser = JSON.parse(storedUser);
     console.log(storedUser);
     if(storedUser != null) {
@@ -36,6 +39,9 @@ export function App() {
       <PrivateRoute path="/fetch-data" isAuth={Auth}>
         <FetchData />
       </PrivateRoute>
+      <PrivateRoute path="/list" isAuth={Auth}>
+        <List />
+      </PrivateRoute>
       {/* <Route path='/fetch-data' component={FetchData} /> */}
       <RedirectAuthRoute path="/login" isAuth={Auth}>
         <Login />
@@ -44,6 +50,7 @@ export function App() {
         <Register />
       </RedirectAuthRoute>
       <Route path='/profile' component={Profile} />
+      {/* <Route path='/list' component={List} /> */}
 
     </Layout>
   );

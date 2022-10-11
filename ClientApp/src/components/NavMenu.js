@@ -49,6 +49,9 @@ export function NavMenu () {
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/list">list</NavLink>
+              </NavItem>
             </ul>
               {Auth ? (
               <ul className="navbar-nav flex-grow">

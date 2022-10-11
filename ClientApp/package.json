@@ -30,7 +30,19 @@
     "workbox-range-requests": "^5.1.3",
     "workbox-routing": "^5.1.3",
     "workbox-strategies": "^5.1.3",
-    "workbox-streams": "^5.1.3"
+    "workbox-streams": "^5.1.3",
+    "@fortawesome/fontawesome-svg-core": "^1.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.0.0",
+    "@fortawesome/react-fontawesome": "^0.1.17",
+    "date-fns": "^2.28.0",
+    "moment": "^2.29.1",
+    "react-bootstrap": "^2.5.0",
+    "react-bootstrap-icons": "^1.8.1",
+    "react-datepicker": "^4.6.0",
+    "react-sortablejs": "^6.1.1",
+    "sass": "^1.49.9",
+    "sortablejs": "^1.14.0",
+    "uuidv4": "^6.2.12"
   },
   "devDependencies": {
     "ajv": "^6.9.1",

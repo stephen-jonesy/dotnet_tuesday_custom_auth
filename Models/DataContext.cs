@@ -12,5 +12,7 @@ namespace DotnetTuesday.Models
         }
 
         public DbSet<User> User { get; set; } = null!;
+        public DbSet<Project> Project { get; set; }
+
     }
 }
