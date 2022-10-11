@@ -141,7 +141,7 @@ export const updatePropjectById = createAsyncThunk(
     async (project) => {
         
         // const user = await authService.getUser();
-        project.OwnerID = "1";
+        project.OwnerID = getUserId();
 
         console.log(project.Id);
         const config = {

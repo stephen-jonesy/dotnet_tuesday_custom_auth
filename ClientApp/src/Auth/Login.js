@@ -13,8 +13,17 @@ export function Login() {
 
     const dispatch = useDispatch();
     const selectUser = (state) => state.user.user;
+    const selectLoading = (state) => state.user.loading;
+    const selectError = (state) => state.user.error;
+    const selectMessage = (state) => state.user.message;
+
     const user = useSelector(selectUser);
+    const isLoading = useSelector(selectLoading);
+    const error = useSelector(selectError);
+    const message = useSelector(selectMessage);
+
     console.log(user);
+    console.log("errors", error);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -85,6 +94,18 @@ export function Login() {
         console.log(json);
     }
 
+    const renderError = () => {
+        if(error === true) {
+            return (
+            <div className="alert alert-danger" role="alert">
+            {message}
+          </div>)
+
+        }
+        else if(error === false) {
+            return;
+        }
+    };
 
     // useEffect(() => {
     //     loginFunt();
@@ -103,14 +124,15 @@ export function Login() {
     // };  
 
     return (  
-        <div>
+        <div className="login-page">
             {/* <button onClick={registerFunct}>register user</button> 
             <button onClick={loginFunt}>Login user</button> 
             <button onClick={getUsersFunt}>get all users</button>
             <button onClick={DeleteFunt}>Delete user</button> */}
-
             <div className="card" style={{width: "18rem"}}>
                 <form className="p-4" onSubmit={loginFunt}>
+                {renderError()}
+
                     <div className="w-100 d-flex justify-content-center">
                         <img src={tuesdayImage} className="p-3 mb-2 mt-0"/>
 
@@ -129,7 +151,7 @@ export function Login() {
                         ></input>
                     </div>
 
-                    <button  type="submit" className="btn btn-primary w-100 mb-2" >Submit</button>
+                    <button  type="submit" className="btn btn-primary w-100 mb-2" >{isLoading ? "loading" : "Submit" }</button>
                     <div className="d-flex justify-content-between"><p>Don't have a user yet? <a href="/register">Register</a></p></div>
                     
                 </form>

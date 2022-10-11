@@ -1,5 +1,6 @@
 import {  createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
+// import {getUserId} from '../user';
 
 const initialState = {
     message: null,
@@ -174,9 +175,8 @@ export const userSlice = createSlice({
 
             state.loading = false;
             state.error = true;
-            state.message = "Opps, something went wrong";
+            state.message = action.payload.message;
             state.auth = false;
-
 
         })
         .addCase(registerUser.pending, (state, action) => {

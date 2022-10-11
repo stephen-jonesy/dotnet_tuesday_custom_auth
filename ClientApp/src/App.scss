@@ -359,3 +359,9 @@ textarea {
   transition: display 2s;
 }
 
+.login-page {
+  .alert {
+    display: block;
+    position: unset;
+  }
+}
