@@ -102,7 +102,12 @@ export function Login() {
           </div>)
 
         }
-        else if(error === false) {
+        if(error === false && message != null) {
+            return (
+                <div className="alert alert-success" role="alert">
+                {message}
+        </div>)}
+        else {
             return;
         }
     };
@@ -124,7 +129,7 @@ export function Login() {
     // };  
 
     return (  
-        <div className="login-page">
+        <div className="user-pages">
             {/* <button onClick={registerFunct}>register user</button> 
             <button onClick={loginFunt}>Login user</button> 
             <button onClick={getUsersFunt}>get all users</button>
@@ -142,16 +147,20 @@ export function Login() {
                         <input type="username" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username"
                         value={username}   
                         onChange={(e) => {setUsername(e.target.value)}} 
+                        required
                         ></input>
                     </div>
                     <div className="form-group mb-3">
                         <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
                         value={password}   
                         onChange={(e) => {setPassword(e.target.value)}} 
+                        required
                         ></input>
                     </div>
 
-                    <button  type="submit" className="btn btn-primary w-100 mb-2" >{isLoading ? "loading" : "Submit" }</button>
+                    <button  type="submit" className="btn w-100 mb-2" >{isLoading ? <div class="spinner-border text-light" role="status">
+  <span class="sr-only"></span>
+</div> : "Submit" }</button>
                     <div className="d-flex justify-content-between"><p>Don't have a user yet? <a href="/register">Register</a></p></div>
                     
                 </form>

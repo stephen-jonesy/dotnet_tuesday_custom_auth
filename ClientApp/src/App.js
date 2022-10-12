@@ -90,7 +90,7 @@ function RedirectAuthRoute({ children, ...rest }) {
         ) : (
           <Redirect
             to={{
-              pathname: "/fetch-data",
+              pathname: "/list",
             }}
           />
         )

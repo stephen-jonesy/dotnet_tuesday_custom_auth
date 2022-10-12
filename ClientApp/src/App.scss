@@ -358,10 +358,32 @@ textarea {
   display: block;
   transition: display 2s;
 }
-
-.login-page {
+.form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: white;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(31 158 179 / 25%);
+}
+.user-pages {
   .alert {
     display: block;
     position: unset;
+  }
+
+  .btn {
+    background: linear-gradient(#1CA2B8, #75a3b4);
+    color: white;
+  }
+  .btn:active, .btn:hover, .btn:first-child:active, .btn.active, .btn.show {
+    color: white;
+
+}
+}
+
+.header {
+  button {
+    all: unset;
+    cursor: pointer;
   }
 }

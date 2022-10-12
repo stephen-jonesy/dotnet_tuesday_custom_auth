@@ -187,7 +187,7 @@ export const userSlice = createSlice({
         .addCase(registerUser.fulfilled, (state, action) => {
             // Add user to the state array
             console.log('fulfiled', action);
-
+            state.error = false;
             state.loading = false;
             state.message = action.payload.message;
 
@@ -197,6 +197,7 @@ export const userSlice = createSlice({
             state.loading = false;
             state.error = true;
             state.message = action.payload.message;
+            console.log(state.message)
 
         })
     }

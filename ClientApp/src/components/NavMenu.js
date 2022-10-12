@@ -5,6 +5,9 @@ import './NavMenu.css';
 import Cookies from 'js-cookie';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../Auth/userReducer';
+import logo from '../images/Tuesday.svg'; // Tell webpack this JS file uses this image
+import mobileLogo from '../images/Tue.svg'; // Tell webpack this JS file uses this image
+import { BoxArrowRight} from "react-bootstrap-icons";
 
 export function NavMenu () {
   const dispatch = useDispatch();
@@ -38,28 +41,25 @@ export function NavMenu () {
     <header className="header">
       <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
         <Container>
-          <NavbarBrand tag={Link} to="/">DotnetTuesday</NavbarBrand>
+          <NavbarBrand tag={Link} to="/">
+              <img src={logo} alt="Logo" className="d-lg-block d-none" />
+              <img src={mobileLogo} alt="mobile Logo" className="d-lg-none" ></img>
+          </NavbarBrand>
             <ul className="navbar-nav flex-grow">
-              <NavItem>
+              {/* <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/list">list</NavLink>
-              </NavItem>
+              </NavItem> */}
             </ul>
               {Auth ? (
               <ul className="navbar-nav flex-grow">
 
-                <NavItem>
+                {/* <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/profile">Profile</NavLink>
-                </NavItem>
-                <button onClick={() => logOutFunt()}>Logout</button>
+                </NavItem> */}
+                <button onClick={() => logOutFunt()}>< BoxArrowRight />  Logout</button>
 
               </ul>
               ) : (
