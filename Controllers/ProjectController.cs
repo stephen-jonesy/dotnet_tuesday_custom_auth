@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DotnetTuesday.Models;
-using Microsoft.AspNetCore.Authorization;
+using DotnetTuesday.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
 
 namespace DotnetTuesday.Controllers;
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ProjectController : ControllerBase
@@ -109,7 +110,7 @@ namespace DotnetTuesday.Controllers;
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProject(long id)
         {
-                        Console.WriteLine( "delete");
+            Console.WriteLine( "delete");
 
             if (_context.Project == null)
             {
