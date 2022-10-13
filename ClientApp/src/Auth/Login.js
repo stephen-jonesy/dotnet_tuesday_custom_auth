@@ -158,9 +158,9 @@ export function Login() {
                         ></input>
                     </div>
 
-                    <button  type="submit" className="btn w-100 mb-2" >{isLoading ? <div class="spinner-border text-light" role="status">
-  <span class="sr-only"></span>
-</div> : "Submit" }</button>
+                    <button  type="submit" className="btn w-100 mb-2" >{isLoading ? <div className="spinner-border text-light" role="status">
+                    <span className="sr-only"></span>
+                    </div> : "Submit" }</button>
                     <div className="d-flex justify-content-between"><p>Don't have a user yet? <a href="/register">Register</a></p></div>
                     
                 </form>
