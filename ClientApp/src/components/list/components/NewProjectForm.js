@@ -97,12 +97,12 @@ export function NewProjectForm({ toggleShow }) {
                             rootClose="true"
                             overlay={
                                 <Tooltip id="overlay" >
-                                    <Button id="priority-toggle-btn" onClick={() => setPriority('None')}>None</Button>
-                                    <Button id="priority-toggle-btn" onClick={() => setPriority('Low')}>Low</Button>
-                                    <Button id="priority-toggle-btn" onClick={() => setPriority('Medium')}>Medium</Button>
-                                    <Button id="priority-toggle-btn" onClick={() => setPriority('High')}>High</Button>
+                                    <Button id="priority-toggle-btn" style={{background: "#48484ecc"}} onClick={() => setPriority('None')}>None</Button>
+                                    <Button id="priority-toggle-btn" style={{background: "#33CE71"}} onClick={() => setPriority('Low')}>Low</Button>
+                                    <Button id="priority-toggle-btn" style={{background: "#FA8035"}} onClick={() => setPriority('Medium')}>Medium</Button>
+                                    <Button id="priority-toggle-btn" style={{background: "#e01414cc"}} onClick={() => setPriority('High')}>High</Button>
                                 </Tooltip>
-                                
+
                             }
                         >
                             <Button className="priority-btn col-6 btn-secondary" style={{background: priority === "None" ? "#48484ecc" : priority === "Low" ? "#33CE71" : priority === "Medium" ? "#FA8035" : priority === "High" ? "#e01414cc" : "#FA8035" }}> {priority}</Button>
@@ -119,10 +119,10 @@ export function NewProjectForm({ toggleShow }) {
                             rootClose="true"
                             overlay={
                                 <Tooltip id="overlay" >
-                                    <Button id="priority-toggle-btn" onClick={() => setStatus('None')}>None</Button>
-                                    <Button id="priority-toggle-btn" onClick={() => setStatus('Done')}>Done</Button>
-                                    <Button id="priority-toggle-btn" onClick={() => setStatus('Doing')}>Doing</Button>
-                                    <Button id="priority-toggle-btn" onClick={() => setStatus('Stuck')}>Stuck</Button>
+                                    <Button id="priority-toggle-btn" style={{background: "#48484ecc"}} onClick={() => setStatus('None')}>None</Button>
+                                    <Button id="priority-toggle-btn" style={{background: "#e01414cc"}} onClick={() => setStatus('Stuck')}>Stuck</Button>
+                                    <Button id="priority-toggle-btn" style={{background: "#FA8035"}} onClick={() => setStatus('Doing')}>Doing</Button>
+                                    <Button id="priority-toggle-btn" style={{background: "#33CE71"}} onClick={() => setStatus('Done')}>Done</Button>
                                 </Tooltip>
                                 
                             }
