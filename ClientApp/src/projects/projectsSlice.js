@@ -48,8 +48,6 @@ export const fetchUserById = createAsyncThunk(
             console.log('thunk rejected')
             return thunkAPI.rejectWithValue(err.message)
         }
-
-
     }
 )
 
@@ -60,12 +58,15 @@ export const createPropjectById = createAsyncThunk(
         
         console.log('this is user', getUserId());
         project.OwnerID = getUserId();
+        const token = Cookies.get("token");
 
             const config = {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+
                 },
                 body: JSON.stringify(project)
             }
@@ -77,8 +78,6 @@ export const createPropjectById = createAsyncThunk(
                 //return json
             if(data.ok == true) {
                 console.log('thunk forfiled')
-                console.log('token is valid');
-                Cookies.set("token", json.token); 
                 return json
 
             } else {
@@ -108,9 +107,17 @@ export const deletePropjectById = createAsyncThunk(
         // console.log(user.sub);
 
         try {
+            const token = Cookies.get("token");
+            const config = {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
 
-            const data = await fetch(`project/${id}`, { method: 'DELETE' })
+                }
+            }
+            const data = await fetch(`project/${id}`, config )
             const json = await data.json();
+            
             console.log(data)
                 //return json
             if(data.ok == true) {
@@ -138,17 +145,21 @@ export const deletePropjectById = createAsyncThunk(
 
 export const updatePropjectById = createAsyncThunk(
     'project/put',
-    async (project) => {
+    async (project, thunkAPI) => {
         
         // const user = await authService.getUser();
         project.OwnerID = getUserId();
 
         console.log(project.Id);
+        const token = Cookies.get("token");
+
         const config = {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+
             },
             body: JSON.stringify(project)
         }
@@ -157,7 +168,22 @@ export const updatePropjectById = createAsyncThunk(
         const json = await data.json()
             //return json
         console.log(json);
-        return json
+        try {
+            if(data.ok == true) {
+                console.log('thunk forfiled')
+                return json
+
+            } else {
+                console.log('thunk rejected')
+
+                return thunkAPI.rejectWithValue(json);
+
+            }
+
+        }
+        catch(err) {
+            return thunkAPI.rejectWithValue(err.message)
+        }
 
 
     }
