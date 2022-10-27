@@ -33,15 +33,12 @@ export const authenticateUser = createAsyncThunk(
 
             const data = await fetch('users/authenticate', config);
             const json = await data.json();
-            console.log(json);
             if(data.ok == true) {
-                console.log('thunk forfiled')
-                console.log('token is valid');
+
                 Cookies.set("token", json.token); 
                 return json;
 
             } else {
-                console.log('thunk rejected')
 
                 return thunkAPI.rejectWithValue(json);
 
@@ -51,7 +48,6 @@ export const authenticateUser = createAsyncThunk(
         } catch (err) {
         // Use `err.response.data` as `action.payload` for a `rejected` action,
         // by explicitly returning it using the `rejectWithValue()` utility
-            console.log('thunk rejected')
             return thunkAPI.rejectWithValue(err.message)
         }
     }
@@ -80,15 +76,11 @@ export const registerUser = createAsyncThunk(
 
             const data = await fetch('users/register', config);
             const json = await data.json()
-            console.log(data.ok);
-            console.log(json);
             if(data.ok == true) {
-                console.log('thunk forfiled')
 
                 return json;
 
             } else {
-                console.log('thunk rejected')
 
                 return thunkAPI.rejectWithValue(json);
 
@@ -98,7 +90,6 @@ export const registerUser = createAsyncThunk(
         } catch (err) {
         // Use `err.response.data` as `action.payload` for a `rejected` action,
         // by explicitly returning it using the `rejectWithValue()` utility
-            console.log('thunk rejected')
             return thunkAPI.rejectWithValue(err.message)
         }
 
@@ -122,7 +113,6 @@ export const userSlice = createSlice({
         },
 
         logoutUser: (state, action) => {
-            console.log('logout rucer')
             Cookies.remove('token');
             sessionStorage.removeItem("user");
             state.user = null;
@@ -142,11 +132,9 @@ export const userSlice = createSlice({
         })
         .addCase(authenticateUser.fulfilled, (state, action) => {
             // Add user to the state array
-            console.log(action.payload);
-            console.log("has error", !"errors" in action.payload);
+
             
             if ('message' in action.payload || "errors" in action.payload) {
-                console.log('error message')
                 state.user = null;
                 state.auth = false;
 
@@ -164,14 +152,12 @@ export const userSlice = createSlice({
                 state.user = user;
                 sessionStorage.setItem("user", JSON.stringify(user));
                 state.auth = true;
-                console.log('is furfiled');
 
             }
 
 
         })
         .addCase(authenticateUser.rejected, (state, action) => {
-            console.log(action.payload);
 
             state.loading = false;
             state.error = true;
@@ -186,18 +172,15 @@ export const userSlice = createSlice({
         })
         .addCase(registerUser.fulfilled, (state, action) => {
             // Add user to the state array
-            console.log('fulfiled', action);
             state.error = false;
             state.loading = false;
             state.message = action.payload.message;
 
         })
         .addCase(registerUser.rejected, (state, action) => {
-            console.log('rejected', action);
             state.loading = false;
             state.error = true;
             state.message = action.payload.message;
-            console.log(state.message)
 
         })
     }

@@ -14,7 +14,6 @@ export function List() {
     const projects = useSelector(selectProjects);
     const loading = useSelector(selectLoading);
 
-    console.log(projects);
     // console.log(status);
     const [show, setShow] = useState(false);
     const array = projects.map((item) => ({
@@ -28,7 +27,6 @@ export function List() {
 
     useEffect(() => {
         dispatch(fetchUserById());
-        console.log('list')
         
     }, []);
 

@@ -19,11 +19,9 @@ export function App() {
   const dispatch = useDispatch();
   const selectAuthState = (state) => state.user.auth;
   const Auth = useSelector(selectAuthState);
-  console.log(Auth);
   useEffect(() => {
     let storedUser = sessionStorage.getItem("user");
     storedUser = JSON.parse(storedUser);
-    console.log(storedUser);
     if(storedUser != null) {
       dispatch(getUser(storedUser));
 
@@ -59,7 +57,6 @@ export function App() {
 
 function PrivateRoute({ children, ...rest }) {
   let auth = rest.isAuth;
-  console.log(rest);
   return (
     <Route
       {...rest}
@@ -80,7 +77,6 @@ function PrivateRoute({ children, ...rest }) {
 
 function RedirectAuthRoute({ children, ...rest }) {
   let auth = rest.isAuth;
-  console.log(rest);
   return (
     <Route exact
       {...rest}

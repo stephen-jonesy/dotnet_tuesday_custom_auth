@@ -22,8 +22,6 @@ export function Login() {
     const error = useSelector(selectError);
     const message = useSelector(selectMessage);
 
-    console.log(user);
-    console.log("errors", error);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -46,7 +44,6 @@ export function Login() {
     //     }
     //     const data = await fetch('users/register', config);
     //     const json = await data.json()
-    //     console.log(json);
     // }
 
     async function loginFunt(e) {
@@ -59,7 +56,6 @@ export function Login() {
         };
         dispatch(authenticateUser(userObj))
         .then((response)=>{
-            console.log('from dispatch', response.meta.requestStatus);
       })
     }
 
@@ -71,7 +67,6 @@ export function Login() {
                 }
             });
         const json = await response.json()
-        console.log(json);
 
         history.push("/");
     }
@@ -91,7 +86,6 @@ export function Login() {
         }
         const data = await fetch(`users/${Id}`, config);
         const json = await data.json()
-        console.log(json);
     }
 
     const renderError = () => {

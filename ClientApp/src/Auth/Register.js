@@ -17,7 +17,6 @@ export function Register () {
     const [lastname, setLastname] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    console.log(message);
     async function registerFunct(e) {
         e.preventDefault();        
 
@@ -30,8 +29,6 @@ export function Register () {
         };
         dispatch(registerUser(userObj))        
         .then((response)=>{
-            console.log(response.meta.requestStatus);
-            console.log('from dispatch', response.meta.requestStatus);
             if (response.meta.requestStatus != "rejected") {
                 history.push("/login");
 

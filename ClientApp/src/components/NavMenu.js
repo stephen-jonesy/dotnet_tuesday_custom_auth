@@ -33,7 +33,6 @@ export function NavMenu () {
   // }
 
   const logOutFunt = () => {
-    console.log("logout funct")
     dispatch(logoutUser());
   }
 

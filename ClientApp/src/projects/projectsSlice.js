@@ -31,11 +31,9 @@ export const fetchUserById = createAsyncThunk(
 
                 //return json
             if(data.ok == true) {
-                console.log('thunk forfiled')
                 return json
 
             } else {
-                console.log('thunk rejected')
 
                 return thunkAPI.rejectWithValue(json);
 
@@ -45,7 +43,6 @@ export const fetchUserById = createAsyncThunk(
         } catch (err) {
         // Use `err.response.data` as `action.payload` for a `rejected` action,
         // by explicitly returning it using the `rejectWithValue()` utility
-            console.log('thunk rejected')
             return thunkAPI.rejectWithValue(err.message)
         }
     }
@@ -56,7 +53,6 @@ export const createPropjectById = createAsyncThunk(
     async (project, thunkAPI) => {
         // const user = await authService.getUser();
         
-        console.log('this is user', getUserId());
         project.OwnerID = getUserId();
         const token = Cookies.get("token");
 
@@ -77,11 +73,9 @@ export const createPropjectById = createAsyncThunk(
             const json = await data.json()
                 //return json
             if(data.ok == true) {
-                console.log('thunk forfiled')
                 return json
 
             } else {
-                console.log('thunk rejected')
 
                 return thunkAPI.rejectWithValue(json);
 
@@ -91,7 +85,6 @@ export const createPropjectById = createAsyncThunk(
         } catch (err) {
         // Use `err.response.data` as `action.payload` for a `rejected` action,
         // by explicitly returning it using the `rejectWithValue()` utility
-            console.log('thunk rejected')
             return thunkAPI.rejectWithValue(err.message)
         }
 
@@ -118,15 +111,12 @@ export const deletePropjectById = createAsyncThunk(
             const data = await fetch(`project/${id}`, config )
             const json = await data.json();
             
-            console.log(data)
                 //return json
             if(data.ok == true) {
-                console.log('thunk forfiled')
 
                 return json
 
             } else {
-                console.log('thunk rejected')
 
                 return thunkAPI.rejectWithValue(json);
 
@@ -136,7 +126,6 @@ export const deletePropjectById = createAsyncThunk(
         } catch (err) {
         // Use `err.response.data` as `action.payload` for a `rejected` action,
         // by explicitly returning it using the `rejectWithValue()` utility
-            console.log('thunk rejected')
             return thunkAPI.rejectWithValue(err.message)
         }
 
@@ -150,7 +139,6 @@ export const updatePropjectById = createAsyncThunk(
         // const user = await authService.getUser();
         project.OwnerID = getUserId();
 
-        console.log(project.Id);
         const token = Cookies.get("token");
 
         const config = {
@@ -163,18 +151,14 @@ export const updatePropjectById = createAsyncThunk(
             },
             body: JSON.stringify(project)
         }
-        console.log(JSON.stringify(project));
         const data = await fetch(`project/${project.Id}`, config);
         const json = await data.json()
             //return json
-        console.log(json);
         try {
             if(data.ok == true) {
-                console.log('thunk forfiled')
                 return json
 
             } else {
-                console.log('thunk rejected')
 
                 return thunkAPI.rejectWithValue(json);
 
@@ -299,7 +283,6 @@ export const projectsSlice = createSlice({
         sortProjects: (state, action) => {
 
             const sortType = action.payload;
-            console.log(sortType);
             if(sortType === 'dueDate') {
                 const sorted = [...state.projects].sort(function(a, b) {
                     var dateA = new Date(a.dueDate), dateB = new Date(b.dueDate);
@@ -406,7 +389,6 @@ export const projectsSlice = createSlice({
     state.response = "modified";
     state.message = `Project deleted`
 
-    console.log(action.payload);
     const filterProjects = state.projects.filter((project) => project.id !== action.payload);
     state.projects = filterProjects;
                 
@@ -416,7 +398,6 @@ export const projectsSlice = createSlice({
     state.message = "Unable to delete project"
     })
     .addCase(createPropjectById.fulfilled, (state, action) => {
-        console.log(action.payload);
         
         state.response = "success";
         state.message = `Project created ${action.payload.name}`
@@ -424,17 +405,14 @@ export const projectsSlice = createSlice({
 
     })
     .addCase(createPropjectById.rejected, (state, action) => {
-        console.log('rejected');
         state.response = "failed";
         state.message = "Unable to create project"
     })
     .addCase(updatePropjectById.fulfilled, (state, action) => {
-        console.log(action.payload);
 
 
     })
     .addCase(updatePropjectById.rejected, (state, action) => {
-        console.log(action.payload);
 
 
     })

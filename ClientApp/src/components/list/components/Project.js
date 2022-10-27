@@ -13,7 +13,6 @@ export function Project({ id, projectList }) {
     const project = () => {
         return projectList.find((project) => project.id === id);
     };
-    console.log(project());
     const {Id, name, dueDate, isComplete, createdAt, note, priority, status} = project();
     
     const dispatch = useDispatch();
@@ -46,7 +45,6 @@ export function Project({ id, projectList }) {
     const eventHandler = (e) => {
 
         if (e.id === "completed-btn") {
-            console.log(projectObj);
             projectObj.IsComplete = !isComplete;
             dispatch(toggleCompleted(id));  
             dispatch(updatePropjectById(projectObj));  

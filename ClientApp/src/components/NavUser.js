@@ -24,7 +24,6 @@ export function NavUser() {
   };
 
   const logOutFunt = () => {
-    console.log("logout funct")
     dispatch(logoutUser());
   };
 
