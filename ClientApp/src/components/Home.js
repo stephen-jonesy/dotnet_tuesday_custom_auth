@@ -5,7 +5,7 @@ export class Home extends Component {
 
   render () {
     return (
-      <div>
+      <div className="mt-4">
         <h1>Welcome to Tuesday!</h1>
         <p>A personal project manager application built on <code>Dotnet</code> & <code>React</code>  </p>
         <ul>
